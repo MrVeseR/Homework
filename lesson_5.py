@@ -31,28 +31,55 @@ class Fraction:
             print("wrong num, set default 1")
             return 1
         
+    @staticmethod
+    def validate_frac(num):
+        if not isinstance(num, Fraction):
+            raise TypeError("wrong type")
+        return num
+        
     def __add__(self, other):
-        if isinstance(other, Fraction):
-            down = self.__down * other.__down
-            top = other.__down * self.__top + other.__top * self.__down
-            return Fraction(top, down)
+        other = self.validate_down(other)
+        down = self.__down * other.__down
+        top = other.__down * self.__top + other.__top * self.__down
+        return Fraction(top, down)
     def __radd__(self, other):
         return self.__add__(other)
     
     def __sub__(self, other):
-        if isinstance(other, Fraction):
-            down = self.__down * other.__down
-            top = other.__down * self.__top - other.__top * self.__down
-            return Fraction(top, down)
+        other = self.validate_down(other)
+        down = self.__down * other.__down
+        top = other.__down * self.__top - other.__top * self.__down
+        return Fraction(top, down)
         
     def __mul__(self, other):
-        if isinstance(other, Fraction):
-            return Fraction(self.__top * other.__top, self.__down * other.__down)
+        other = self.validate_down(other)
+        return Fraction(self.__top * other.__top, self.__down * other.__down)
         
     def __truediv__(self, other):
-        if isinstance(other, Fraction):
-            num = Fraction(other.__down, other.__top)
-            return self.__mul__(num)
+        other = self.validate_frac(other)
+        num = Fraction(other.__down, other.__top)
+        return self.__mul__(num)
+        
+    def __eq__(self, other):
+        other = self.validate_frac(other)
+        num1 = self.__top * other.__down
+        num2 = other.__top * self.__down
+        return num1 == num2
+        
+    def __lt__(self, other):
+        other = self.validate_frac(other)
+        num1 = self.__top * other.__down
+        num2 = other.__top * self.__down
+        return num1 < num2
+        
+    def __le__(self, other):
+        other = self.validate_frac(other)
+        num1 = self.__top * other.__down
+        num2 = other.__top * self.__down
+        return num1 <= num2
+        
+    def __hash__(self):
+        return hash((self.__top, self.__down))
         
 class FractionMatrix:
     
@@ -161,8 +188,8 @@ class FractionMatrix:
             return self.det(self.__data)
         else: raise ValueError("only quadro")
         
-m1 = FractionMatrix([[Fraction(1, 2), Fraction(1, 3)], [Fraction(2, 5), Fraction(3, 4)], [Fraction(1, 3), Fraction(22, 15)]])
-m2 = FractionMatrix([[Fraction(1, 3), Fraction(2, 3)], [Fraction(1, 2), Fraction(2, 5)]])
-m3 = m1 * m2
-print(m2.determinant)
+# m1 = FractionMatrix([[Fraction(1, 2), Fraction(1, 3)], [Fraction(2, 5), Fraction(3, 4)], [Fraction(1, 3), Fraction(22, 15)]])
+# m2 = FractionMatrix([[Fraction(1, 3), Fraction(2, 3)], [Fraction(1, 2), Fraction(2, 5)]])
+# # m3 = m1 * m2
+# print(m2.determinant)
 

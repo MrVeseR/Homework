@@ -40,6 +40,6 @@ class Recipe:
         print("Cecking the instruction...")
         print(f"{self.__name} is done!")
 
-# spag = Recipe("spags", ["kartopla", "ris", "chesnok", "ktulhu", "nekonomikon(not cat at all)"])
-# spag.print_ingredients()
-# spag.cook()
+spag = Recipe("spags", ["kartopla", "ris", "chesnok", "ktulhu", "nekonomikon(not cat at all)"])
+spag.print_ingredients()
+spag.cook()
